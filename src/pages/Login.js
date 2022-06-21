@@ -1,7 +1,10 @@
 import { Button, TextField } from "@mui/material";
-import React from "react";
+import { useFormik } from "formik";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import RoundedButton from "../component/RoundedButton";
+import * as Yup from "yup";
+
 import {
   StyledContainer,
   FormWrapper,
@@ -12,35 +15,69 @@ import {
 } from "../style";
 
 export default function Login() {
+  const [blurEmail, setBlurEmail] = useState(false);
+  const [blurPassword, setBlurPassword] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .required("Vui lòng nhập Email")
+        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Email không hợp lệ"),
+      password: Yup.string()
+        .required("Vui lòng nhập password")
+        .min(6, "Mật khẩu phải từ 6"),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  console.log(blurEmail);
+  console.log(formik.errors?.email);
+
   return (
     <StyledContainer>
       <FormWrapper>
         <FormHeader>Đăng nhập</FormHeader>
-        <FormContent>
+        <FormContent onSubmit={formik.handleSubmit}>
           <TextField
-            id="email"
-            label="Tên đăng nhập hoặc email"
+            label="Email"
             margin="normal"
             fullWidth
-            required
             autoComplete="off"
             variant="standard"
-            //value={username}
-            //onChange={({ target }) => setUsername(target.value)}
+            name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={() => setBlurEmail(formik.errors?.email != undefined)}
+            onFocus={() => setBlurEmail(false)}
+            error={formik.errors?.email !== "" && blurEmail}
+            helperText={
+              formik.errors.email !== "" && blurEmail ? formik.errors.email : ""
+            }
           />
           <TextField
-            id="password"
             label="Mật khẩu"
             margin="normal"
             fullWidth
-            required
             autoComplete="off"
             type="password"
             variant="standard"
-            // value={password}
-            // onChange={setPassword}
-            // error={error.status}
-            // helperText={error.message}
+            name="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={() => setBlurPassword(formik.errors?.password != undefined)}
+            onFocus={() => setBlurPassword(false)}
+            error={formik.errors?.password !== "" && blurPassword}
+            helperText={
+              formik.errors.password !== "" && blurPassword
+                ? formik.errors.password
+                : ""
+            }
           />
           <FormActions>
             <RoundedButton

@@ -20,6 +20,8 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { Menu, MenuItem } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import userApi from "../api/userApi";
 
 const drawerWidth = 240;
 
@@ -89,6 +91,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Layout({ children }) {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -111,6 +114,13 @@ export default function Layout({ children }) {
     setAnchorEl(event.currentTarget);
   };
 
+  const logout = async () => {
+    await userApi.logout();
+    localStorage.removeItem("user");
+    handleMenuClose();
+    navigate("/login", { replace: true });
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -130,6 +140,7 @@ export default function Layout({ children }) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={logout}>Log out</MenuItem>
     </Menu>
   );
 

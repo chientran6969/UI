@@ -11,7 +11,10 @@ const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify(params),
 });
 axiosClient.interceptors.request.use(async (config) => {
-  // Handle token here ...
+  var token = JSON.parse(localStorage.getItem("user"))?.token || null;
+  config.headers = {
+    Authorization: `Bearer ${token}`,
+  };
   return config;
 });
 axiosClient.interceptors.response.use(
@@ -22,8 +25,8 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    // Handle errors
-    throw error;
+    var dataError = error?.response?.data;
+    return dataError ? dataError : error;
   }
 );
 export default axiosClient;

@@ -1,7 +1,7 @@
-import { Button, TextField } from "@mui/material";
+import { Box, Button, TextField, useRadioGroup } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RoundedButton from "../component/RoundedButton";
 import * as Yup from "yup";
 
@@ -13,31 +13,45 @@ import {
   FormActions,
   GoogleButton,
 } from "../style";
+import userApi from "../api/userApi";
 
 export default function Login() {
-  const [blurEmail, setBlurEmail] = useState(false);
-  const [blurPassword, setBlurPassword] = useState(false);
+  const navigate = useNavigate();
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorPassword, setErrorPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
+    initialErrors: {
+      email: "Vui lòng nhập Email",
+      password: "Vui lòng nhập Password",
+    },
     validationSchema: Yup.object({
       email: Yup.string()
-        .required("Vui lòng nhập Email")
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Email không hợp lệ"),
+        .required("Vui lòng nhập Email.")
+        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Email không hợp lệ."),
       password: Yup.string()
-        .required("Vui lòng nhập password")
-        .min(6, "Mật khẩu phải từ 6"),
+        .required("Vui lòng nhập Password.")
+        .min(8, "Mật khẩu phải từ 8 tới 16 kí tự.")
+        .max(16, "Mật khẩu phải từ 8 tới 16 kí tự."),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const res = await userApi.login(values);
+      if (res?.errors) {
+        setError("Email hoặc mật khẩu không đúng!");
+      } else if (res?.error) {
+        setError("Email hoặc mật khẩu không đúng!");
+      } else {
+        setError("");
+        localStorage.setItem("user", JSON.stringify(res));
+        navigate("/", { replace: true });
+      }
     },
   });
-
-  console.log(blurEmail);
-  console.log(formik.errors?.email);
 
   return (
     <StyledContainer>
@@ -53,11 +67,16 @@ export default function Login() {
             name="email"
             value={formik.values.email}
             onChange={formik.handleChange}
-            onBlur={() => setBlurEmail(formik.errors?.email != undefined)}
-            onFocus={() => setBlurEmail(false)}
-            error={formik.errors?.email !== "" && blurEmail}
+            onBlur={() => setErrorEmail(formik.errors?.email !== undefined)}
+            onFocus={() => {
+              setErrorEmail(false);
+              setError("");
+            }}
+            error={formik.errors?.email != "" && errorEmail}
             helperText={
-              formik.errors.email !== "" && blurEmail ? formik.errors.email : ""
+              formik.errors?.email != "" && errorEmail
+                ? formik.errors.email
+                : null
             }
           />
           <TextField
@@ -70,20 +89,32 @@ export default function Login() {
             name="password"
             value={formik.values.password}
             onChange={formik.handleChange}
-            onBlur={() => setBlurPassword(formik.errors?.password != undefined)}
-            onFocus={() => setBlurPassword(false)}
-            error={formik.errors?.password !== "" && blurPassword}
+            onBlur={() =>
+              setErrorPassword(formik.errors?.password !== undefined)
+            }
+            onFocus={() => {
+              setErrorPassword(false);
+              setError("");
+            }}
+            error={formik.errors?.password != "" && errorPassword}
             helperText={
-              formik.errors.password !== "" && blurPassword
+              formik.errors?.password != "" && errorPassword
                 ? formik.errors.password
-                : ""
+                : null
             }
           />
+
+          {error ? <Box sx={{ color: "error.main" }}>{error}</Box> : null}
+
           <FormActions>
             <RoundedButton
               variant="contained"
               type="submit"
               aria-label="Sign in"
+              onClick={() => {
+                setErrorEmail(formik.errors?.email !== undefined);
+                setErrorPassword(formik.errors?.password !== undefined);
+              }}
             >
               Đăng Nhập
             </RoundedButton>

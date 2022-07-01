@@ -1,7 +1,17 @@
+import axiosClient from "./axiosClient";
+
 const userApi = {
-  authenticate: (params) => {
-    const url = "/user";
-    return axiosClient.post(url, { params });
+  login: (params) => {
+    const url = "/users/authentication";
+    return axiosClient.post(url, {
+      email: params?.email,
+      password: params?.password,
+    });
+  },
+
+  logout: () => {
+    const url = "/users/logout";
+    return axiosClient.get(url);
   },
 };
 

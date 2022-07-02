@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import RoundedButton from "../component/RoundedButton";
 import * as Yup from "yup";
+import {GoogleLogin} from 'react-google-login';
+
 
 import {
   StyledContainer,
@@ -20,6 +22,21 @@ export default function Login() {
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
   const [error, setError] = useState("");
+
+  const responseGoogle = async (res) => {
+    if(res.tokenId !== ""){
+      const response = await userApi.loginWithGG(res.tokenId);
+      console.log(response);
+      if(response.status !== 200){
+        setError("Email hoặc mật khẩu không đúng!");
+      }
+      if(response.status === 200){
+        setError("");
+        localStorage.setItem("user", JSON.stringify(response.data));
+        navigate("/", { replace: true });
+      }
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -51,6 +68,8 @@ export default function Login() {
         navigate("/", { replace: true });
       }
     },
+
+    
   });
 
   return (
@@ -119,7 +138,7 @@ export default function Login() {
               Đăng Nhập
             </RoundedButton>
             <div>hoặc</div>
-            <GoogleButton
+            {/* <GoogleButton
               variant="contained"
               color="error"
               type="button"
@@ -134,7 +153,15 @@ export default function Login() {
                 <path d="M7 11v2.4h3.97c-.16 1.029-1.2 3.02-3.97 3.02-2.39 0-4.34-1.979-4.34-4.42 0-2.44 1.95-4.42 4.34-4.42 1.36 0 2.27.58 2.79 1.08l1.9-1.83c-1.22-1.14-2.8-1.83-4.69-1.83-3.87 0-7 3.13-7 7s3.13 7 7 7c4.04 0 6.721-2.84 6.721-6.84 0-.46-.051-.81-.111-1.16h-6.61zm0 0 17 2h-3v3h-2v-3h-3v-2h3v-3h2v3h3v2z" />
               </svg>
               Google
-            </GoogleButton>
+            </GoogleButton> */}
+            <GoogleLogin
+        apiKey='AIzaSyA8UXDoqyjLn2k5tg7mWnblqJ9AnrCMeLk'
+        clientId='933484099765-fj160b81tt50defcu0bu5rgjd1qgbga1.apps.googleusercontent.com'
+        buttonText='Login With Google'
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+      ></GoogleLogin>
           </FormActions>
         </FormContent>
       </FormWrapper>

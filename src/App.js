@@ -26,7 +26,15 @@ export default function App() {
             <Route exact path="/login" element={<Login />} />
           </Route>
           <Route exact path="/admin" element={<AdminRoutes />}>
-            <Route exact path="/admin" element={<Admin />} />
+            <Route
+              exact
+              path="/admin"
+              element={
+                <Layout>
+                  <Admin />
+                </Layout>
+              }
+            />
           </Route>
         </Routes>
       </div>

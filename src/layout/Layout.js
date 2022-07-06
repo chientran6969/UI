@@ -193,8 +193,20 @@ export default function Layout({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Quản Lý Đồ án", "Thiết Lập"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+          {["Quản Lý Đồ án", "Thiết Lập", "Danh sách sinh viên"].map((text, index) => (
+            <ListItem key={text} disablePadding sx={{ display: "block" }}
+              onClick = {()=>{
+                switch (index) {
+                  case 0:
+                    break;
+                  case 1:
+                    break;
+                  case 2:
+                    navigate("/admin/PeriodStudent",{ replace: true });
+                    break;
+                }
+              }}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,

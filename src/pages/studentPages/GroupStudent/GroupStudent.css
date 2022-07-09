@@ -1,0 +1,28 @@
+.text_group_name {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.error_add_group {
+    text-align: center;
+    color: red;
+}
+
+.edit_delete_group_zone {
+    text-align: center;
+}
+
+.error_add_member {
+    text-align: center;
+    color: red;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.error_delete_member {
+    text-align: center;
+    color: red;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}

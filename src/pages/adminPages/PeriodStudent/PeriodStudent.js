@@ -89,7 +89,7 @@ export default function PeriodStudent() {
             let response = await PeriodStudentApi.AddPeriodStudent(data);
             if (response.status === 201) {
                 let s = {
-                    id: students.length + 1,
+                    id: GetId(),
                     MSSV: studentAdded
                 }
 
@@ -106,6 +106,16 @@ export default function PeriodStudent() {
             setErrorTextAdd("Bạn chưa nhập MSSV");
         }
     };
+
+    function GetId(){
+        let max = 0;
+        students.forEach((i) =>{
+            if(i.id > max){
+                max = i.id;
+            }
+        })
+        return max+1;
+    }
 
     async function handleAddStudentByCsv(){
         if(errorTextAdd === "" && studentAddedFile){

@@ -193,13 +193,14 @@ export default function Layout({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Quản Lý Đồ án", "Thiết Lập", "Danh sách sinh viên", "Nhóm"].map((text, index) => (
+          {["Quản Lý Đồ án", "Đợt đăng kí", "Danh sách sinh viên", "Nhóm"].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}
               onClick={() => {
                 switch (index) {
                   case 0:
                     break;
                   case 1:
+                    navigate("/admin/Period", { replace: true });
                     break;
                   case 2:
                     navigate("/admin/PeriodStudent", { replace: true });

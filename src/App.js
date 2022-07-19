@@ -5,10 +5,10 @@ import Layout from "./layout/Layout";
 import Login from "./pages/Login";
 import { AdminRoutes, LogedIn, PrivateRoutes } from "./routes";
 import Admin from "./pages/adminPages/Admin";
-//import Period from "./pages/Period";
 import PeriodStudent from "./pages/adminPages/PeriodStudent/PeriodStudent";
 import GroupStudent from "./pages/studentPages/GroupStudent/GroupStudent";
 import Period from "./pages/adminPages/Period/Period";
+import PeriodTopic from "./pages/adminPages/PeriodTopic/PeriodTopic";
 
 export default function App() {
   return (
@@ -46,6 +46,11 @@ export default function App() {
           <Route path="/GroupStudent" element={
             <Layout>
               <GroupStudent></GroupStudent>
+            </Layout>}>
+          </Route>
+          <Route path="/admin/PeriodTopic" element={
+            <Layout>
+              <PeriodTopic></PeriodTopic>
             </Layout>}>
           </Route>
         </Routes>

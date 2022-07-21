@@ -30,6 +30,41 @@ const TopicApi = {
             });
     },
 
+    UpdateTopic: (params) => {
+        const url = "/Topics/"+params.id;
+        return axiosClient.put(url, {
+                name: params.name,
+                major: params.major,
+                description: params.description
+            })
+            .then((res) => {
+                if(res === "Name of topic is exist"){
+                    return {
+                        status: 400,
+                        error: "Tên đề tài đã tồn tại trong danh sách"
+                    }
+                }
+                else if(res === "You can not update topic have been registered"){
+                    return {
+                        status: 400,
+                        error: "Không thể chỉnh sửa đề tài đã có đăng kí"
+                    }
+                }
+                else if(res?.id !== ""){
+                    return {
+                        status: 200,
+                        data:res
+                    }
+                }
+                else{
+                    return {
+                        status: 404,
+                        error: "Lỗi cập nhật đề tài"
+                    }
+                }
+            });
+    },
+
     DeleteTopic: (params) => {
         const url = "/Topics/"+params.id;
         return axiosClient.delete(url)
@@ -76,7 +111,18 @@ const TopicApi = {
         const url = "/Topics/"+params.id;
         return axiosClient.get(url)
             .then((res) => {
-                console.log(res);
+                if(res?.id !== ""){
+                    return {
+                        status: 200,
+                        data: res
+                    }
+                }
+                else{
+                    return {
+                        status : 404,
+                        error : "Lỗi lấy dữ liệu"
+                    }
+                }
             });
     },
 }

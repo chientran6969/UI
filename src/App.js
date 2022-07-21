@@ -9,6 +9,7 @@ import PeriodStudent from "./pages/adminPages/PeriodStudent/PeriodStudent";
 import GroupStudent from "./pages/studentPages/GroupStudent/GroupStudent";
 import Period from "./pages/adminPages/Period/Period";
 import PeriodTopic from "./pages/adminPages/PeriodTopic/PeriodTopic";
+import Topic from "./pages/adminPages/Topic/Topic";
 
 export default function App() {
   return (
@@ -51,6 +52,11 @@ export default function App() {
           <Route path="/admin/PeriodTopic" element={
             <Layout>
               <PeriodTopic></PeriodTopic>
+            </Layout>}>
+          </Route>
+          <Route path="/admin/Topic" element={
+            <Layout>
+              <Topic></Topic>
             </Layout>}>
           </Route>
         </Routes>

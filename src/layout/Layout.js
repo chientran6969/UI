@@ -193,50 +193,63 @@ export default function Layout({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Quản Lý Đồ án", "Đợt đăng kí", "Danh sách sinh viên", "Nhóm", "Đề tài","Danh sách Topic"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}
-              onClick={() => {
-                switch (index) {
-                  case 0:
-                    break;
-                  case 1:
-                    navigate("/admin/Period", { replace: true });
-                    break;
-                  case 2:
-                    navigate("/admin/PeriodStudent", { replace: true });
-                    break;
-                  case 3:
-                    navigate("/GroupStudent", { replace: true });
-                    break;
-                  case 4:
-                    navigate("/admin/PeriodTopic", { replace: true });
-                    break;
-                  case 5:
-                    navigate("/admin/Topic", { replace: true });
-                    break;
-                }
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+          {["Quản Lý Đồ án",
+            "Đợt đăng kí",
+            "Danh sách sinh viên",
+            "Nhóm",
+            "Đề tài",
+            "Danh sách Topic for Admin",
+            "Danh sách Topic for student",
+            "Đăng kí"].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: "block" }}
+                onClick={() => {
+                  switch (index) {
+                    case 0:
+                      break;
+                    case 1:
+                      navigate("/admin/Period", { replace: true });
+                      break;
+                    case 2:
+                      navigate("/admin/PeriodStudent", { replace: true });
+                      break;
+                    case 3:
+                      navigate("/GroupStudent", { replace: true });
+                      break;
+                    case 4:
+                      navigate("/admin/PeriodTopic", { replace: true });
+                      break;
+                    case 5:
+                      navigate("/admin/Topic", { replace: true });
+                      break;
+                    case 6:
+                      navigate("/Topic", { replace: true });
+                      break;
+                    case 7:
+                      navigate("/PeriodTopicStudent", { replace: true });
+                      break;
+                  }
                 }}
               >
-                <ListItemIcon
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

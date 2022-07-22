@@ -10,6 +10,8 @@ import GroupStudent from "./pages/studentPages/GroupStudent/GroupStudent";
 import Period from "./pages/adminPages/Period/Period";
 import PeriodTopic from "./pages/adminPages/PeriodTopic/PeriodTopic";
 import Topic from "./pages/adminPages/Topic/Topic";
+import TopicForStudent from "./pages/studentPages/TopicForStudent/TopicForStudent";
+import PeriodTopicStudent from "./pages/studentPages/PeriodTopicStudent/PeriodTopicStudent";
 
 export default function App() {
   return (
@@ -44,19 +46,29 @@ export default function App() {
             </Layout>
           } />
 
-          <Route path="/GroupStudent" element={
+          <Route exact path="/GroupStudent" element={
             <Layout>
               <GroupStudent></GroupStudent>
             </Layout>}>
           </Route>
-          <Route path="/admin/PeriodTopic" element={
+          <Route exact path="/admin/PeriodTopic" element={
             <Layout>
               <PeriodTopic></PeriodTopic>
             </Layout>}>
           </Route>
-          <Route path="/admin/Topic" element={
+          <Route exact path="/admin/Topic" element={
             <Layout>
               <Topic></Topic>
+            </Layout>}>
+          </Route>
+          <Route exact path="/Topic" element={
+            <Layout>
+              <TopicForStudent></TopicForStudent>
+            </Layout>}>
+          </Route>
+          <Route exact path="/PeriodTopicStudent" element={
+            <Layout>
+              <PeriodTopicStudent></PeriodTopicStudent>
             </Layout>}>
           </Route>
         </Routes>

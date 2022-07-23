@@ -15,6 +15,7 @@ import "./PeriodTopicStudent.css";
 import GroupStudentApi from "../../../api/GroupStudentApi"
 import PeriodTopicStudentApi from "../../../api/PeriodTopicStudentApi"
 import RichTextEditor from "./RichTextEditor";
+import PeriodTopicDetailFS from "./PeriodTopicDetailFS";
 
 export default function PeriodTopicListFS({ rows, teachers, period }) {
 
@@ -31,12 +32,21 @@ export default function PeriodTopicListFS({ rows, teachers, period }) {
     // Modal
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [openRegisterModal, setOpenRegisterModal] = useState(false);
+    const [openDetailModal, setOpenDetailModal] = useState(false);
 
     //Planing
     const [planing, setPlaning] = useState("");
     const getPlaning = (value) => {
         setPlaning(value);
     };
+
+    const handleOpenDetailModal = () => {
+        setOpenDetailModal(true);
+    }
+
+    const handleCloseDetailModal = () => {
+        setOpenDetailModal(false);
+    }
 
     const handleCloseSnackbar = () => {
         setOpenSnackbar(false);
@@ -80,10 +90,15 @@ export default function PeriodTopicListFS({ rows, teachers, period }) {
         });
         setTopics(data);
     };
-    
+
     const handlePreRegister = (e, params) => {
         setSelectedPeriodTopic(params.row.idHiden);
         checkInitGroup(params.row);
+    }
+
+    const handlePreDetail = (e, params) => {
+        setSelectedPeriodTopic(params.row.idHiden);
+        handleOpenDetailModal();
     }
 
     async function checkInitGroup(value) {
@@ -93,7 +108,7 @@ export default function PeriodTopicListFS({ rows, teachers, period }) {
         if (res.status === 200) {
             let check = false;
             value.periodTopicStudents.forEach((p) => {
-                if (p.groupId === myOwnPts.data.groupId) {
+                if (p.groupId === myOwnPts.data[0].groupId) {
                     check = true;
                 }
             });
@@ -178,6 +193,23 @@ export default function PeriodTopicListFS({ rows, teachers, period }) {
             }
         },
         {
+            field: "Detail",
+            headerName: 'Chi tiết',
+            renderCell: (params) => {
+                return (
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={(event) => {
+                            handlePreDetail(event, params);
+                        }}
+                    >
+                        Chi tiết
+                    </Button>
+                );
+            }
+        },
+        {
             field: "Register",
             headerName: 'Đăng kí',
             renderCell: (params) => {
@@ -223,6 +255,14 @@ export default function PeriodTopicListFS({ rows, teachers, period }) {
                     <Button onClick={handleCloseRegisterModal}>Hủy</Button>
                     <Button onClick={handleRegister} >Lưu</Button>
                 </DialogActions>
+            </Dialog>
+
+            <Dialog
+                fullWidth={true}
+                maxWidth={'md'}
+                open={openDetailModal}
+                onClose={handleCloseDetailModal}>
+                <PeriodTopicDetailFS id={selectedPeriodTopic}></PeriodTopicDetailFS>
             </Dialog>
 
             <Snackbar

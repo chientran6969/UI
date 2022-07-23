@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./PeriodTopic.css";
+import "./PeriodTopicStudent.css";
 import PeriodTopicApi from "../../../api/PeriodTopicApi";
 import {
     Box,
@@ -27,20 +27,15 @@ export default function PeriodTopicDetailFS({ id }) {
         let res = await PeriodTopicApi.GetPeriodTopicDetail({ id: id });
         if (res.status === 200) {
             setTopicDetail(res.data);
-            console.log(res.data);
         }
     }
 
     return (
         <>
-            {/* <DialogTitle >Thông tin chi tiết</DialogTitle>
+            <DialogTitle >Thông tin chi tiết</DialogTitle>
             <DialogContent>
                 <Typography ml={1} mt={2.5}>
-                    Tên đề tài:
-                    {topicDetail?.topic?.name}
-                </Typography>
-                <Typography ml={1} mt={2.5}>
-                    Đợt đăng kí: {topicDetail?.period?.name}
+                    Tên đề tài: {topicDetail?.topic?.name}
                 </Typography>
                 <Typography ml={1} mt={2.5}>
                     Giáo viên phụ trách: {topicDetail?.teacher?.email}
@@ -55,15 +50,15 @@ export default function PeriodTopicDetailFS({ id }) {
                     Trạng thái: {(topicDetail?.state=='1'?"Chờ xét duyệt":(topicDetail?.state=='2'?"Đã được duyệt":"Đã bị từ chối"))}
                 </Typography>
                 <Typography ml={1} mt={2.5}>
-                    Số lượng đã đăng kí: {topicDetail?.periodTopicStudents?.length}/{topicDetail?.maxRegister}
+                    Số lượng đã đăng kí: {topicDetail?.periodTopicStudents.length}/{topicDetail?.maxRegister}
                 </Typography>
                 <Typography ml={1} mt={2.5}>
-                    Mô tả:
+                    Mô tả đề tài:
                 </Typography>
                 <Typography ml={1} mt={2.5}>
                     {topicDetail?.topic?.description}
                 </Typography>
-            </DialogContent> */}
+            </DialogContent>
         </>
     );
 }

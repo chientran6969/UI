@@ -82,6 +82,39 @@ const PeriodTopicApi = {
                 }
             });
     },
+    AddPeriodTopicByS: (params) => {
+        const url = "/PeriodTopics";
+        let returnError = {
+            status: 400,
+            error: ""
+        }
+        return axiosClient.post(url, {
+            periodId: params.periodId,
+            topicId: params.topicId,
+            teacherId: params.teacherId,
+            groupStudentId: params.groupStudentId,
+            maxRegister: params.maxRegister,
+            maxGroupMember: params.maxMember,
+        })
+            .then((res) => {
+                if (res === "You can not add Period Topic two times") {
+                    returnError.error = "Bạn không thể thêm một kì 2 đề giống nhau";
+                    return returnError;
+                } else if (res === "Topic in Period is full") {
+                    returnError.error = "Đợt đăng kí này đã đầy đề tài";
+                    return returnError;
+                } else if (res?.id !== "") {
+                    return {
+                        status: 200,
+                        data: res
+                    }
+                }
+                else {
+                    returnError.error = "Lỗi thêm đề vào đợt";
+                    return returnError;
+                }
+            });
+    },
 
     GetPeriodTopicDetail: (params) => {
         const url = "/PeriodTopics/"+params.id;

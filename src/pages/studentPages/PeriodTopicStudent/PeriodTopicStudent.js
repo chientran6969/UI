@@ -1,17 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-    Box,
-    Button,
-    TextField,
-    Dialog,
-    DialogContent,
-    DialogActions,
-    DialogTitle,
-    Grid,
-    Typography,
-    Input,
     Snackbar,
-    TextareaAutosize
 } from "@mui/material";
 import "./PeriodTopicStudent.css";
 import PeriodApi from "../../../api/PeriodApi";

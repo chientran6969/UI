@@ -10,7 +10,7 @@ const PeriodTopicStudentApi = {
                 if (res?.length >= 0) {
                     return {
                         status: 200,
-                        data: res[0]
+                        data: res
                     }
                 }
                 else {
@@ -63,6 +63,79 @@ const PeriodTopicStudentApi = {
                     return {
                         status: 400,
                         error: "Lỗi đăng kí"
+                    }
+                }
+            });
+    },
+    UpdatePTS: (params) => {
+        const url = "/PeriodTopicStudents/my/"+params.id;
+        return axiosClient.put(url, {
+            planning: params.planning
+        })
+            .then((res) => {
+                if(res === "You can not allowed edit this register"){
+                    return {
+                        status: 400,
+                        error: "Đăng kí này không thuộc về nhóm của bạn"
+                    }
+                }
+                else if(res === "This register have been approval"){
+                    return {
+                        status: 400,
+                        error: "Không thể sửa đăng kí đã được duyệt"
+                    }
+                }
+                else if(res?.id !== ""){
+                    return {
+                        status: 200,
+                        data: res
+                    }
+                }
+                else{
+                    return {
+                        status: 400,
+                        error: "Lỗi đăng kí"
+                    }
+                }
+            });
+    },
+    DeletePTS: (params) => {
+        const url = "/PeriodTopicStudents/"+params.id;
+        return axiosClient.delete(url)
+            .then((res) => {
+                if(res === "You can not allowed delete this register"){
+                    return {
+                        status: 400,
+                        error: "Quyền xóa đăng kí thuộc về nhóm trưởng"
+                    }
+                }
+                else if(res === "This register have been approval"){
+                    return {
+                        status: 400,
+                        error: "Đăng kí đã được duyệt, không thể xóa"
+                    }
+                }
+                else if(res.statusCode === 200){
+                    return {
+                        status: 200,
+                    }
+                }
+            });
+    },
+    GetPTSById: (params) => {
+        const url = "/PeriodTopicStudents/"+params.id;
+        return axiosClient.get(url)
+            .then((res) => {
+                if (res?.id!==""){
+                    return {
+                        status: 200,
+                        data: res
+                    }
+                }
+                else{
+                    return {
+                        status: 400,
+                        error: "Lấy dữ liệu thất bại"
                     }
                 }
             });

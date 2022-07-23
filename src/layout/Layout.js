@@ -200,7 +200,8 @@ export default function Layout({ children }) {
             "Đề tài",
             "Danh sách Topic for Admin",
             "Danh sách Topic for student",
-            "Đăng kí"].map((text, index) => (
+            "Đăng kí",
+            "Danh sách đã đăng kí"].map((text, index) => (
               <ListItem key={text} disablePadding sx={{ display: "block" }}
                 onClick={() => {
                   switch (index) {
@@ -226,6 +227,9 @@ export default function Layout({ children }) {
                       break;
                     case 7:
                       navigate("/PeriodTopicStudent", { replace: true });
+                      break;
+                    case 8:
+                      navigate("/MyPeriodTopicStudent", { replace: true });
                       break;
                   }
                 }}

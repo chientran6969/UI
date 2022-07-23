@@ -10,8 +10,9 @@ import GroupStudent from "./pages/studentPages/GroupStudent/GroupStudent";
 import Period from "./pages/adminPages/Period/Period";
 import PeriodTopic from "./pages/adminPages/PeriodTopic/PeriodTopic";
 import Topic from "./pages/adminPages/Topic/Topic";
-import TopicForStudent from "./pages/studentPages/TopicForStudent/TopicForStudent";
-import PeriodTopicStudent from "./pages/studentPages/PeriodTopicStudent/PeriodTopicStudent";
+import TopicForStudent from "./pages/studentPages/TopicForStudent/TopicForStudent.js";
+import PeriodTopicStudent from "./pages/studentPages/PeriodTopicStudent/PeriodTopicStudent.js";
+import MyPeriodTopicStudent from "./pages/studentPages/MyPeriodTopicStudent/MyPeriodTopicStudent";
 
 export default function App() {
   return (
@@ -69,6 +70,11 @@ export default function App() {
           <Route exact path="/PeriodTopicStudent" element={
             <Layout>
               <PeriodTopicStudent></PeriodTopicStudent>
+            </Layout>}>
+          </Route>
+          <Route exact path="/MyPeriodTopicStudent" element={
+            <Layout>
+              <MyPeriodTopicStudent></MyPeriodTopicStudent>
             </Layout>}>
           </Route>
         </Routes>

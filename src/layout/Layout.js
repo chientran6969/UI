@@ -22,6 +22,15 @@ import { Menu, MenuItem } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import userApi from "../api/userApi";
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
+import GroupsIcon from '@mui/icons-material/Groups';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 
 const drawerWidth = 240;
 
@@ -156,6 +165,61 @@ export default function Layout({ children }) {
     }
   }
 
+  function handleSetIconAdmin(index) {
+    switch (index) {
+      case 0:
+        return (<AnalyticsIcon />);
+      case 1:
+        return (<AppRegistrationIcon />);
+      case 2:
+        return (<RecentActorsIcon />);
+      case 3:
+        return (<FilterListIcon />);
+      case 4:
+        return (<ClearAllIcon />);
+      default:
+        return (<MailIcon />);
+    }
+  }
+
+  function handleSetIconStudent(index) {
+    switch (index) {
+      case 0:
+        return (<AnalyticsIcon />);
+      case 1:
+        return (<GroupsIcon />);
+      case 2:
+        return (<ClearAllIcon />);
+      case 3:
+        return (<AssignmentIcon />);
+      case 4:
+        return (<AssignmentTurnedInIcon />);
+      case 5:
+        return (<RecentActorsIcon />);
+      case 6:
+        return (<FilterListIcon />);
+      default:
+        return (<MailIcon />);
+    }
+  }
+
+  function handleSetIconTeacher(index) {
+    switch (index) {
+      case 0:
+        return (<AnalyticsIcon />);
+      case 1:
+        return (<ClearAllIcon />);
+      case 2:
+        return (<FactCheckIcon />);
+      case 3:
+        return (<RecentActorsIcon />);
+      case 4:
+        return (<FilterListIcon />);
+      default:
+        return (<MailIcon />);
+    }
+  }
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -206,10 +270,10 @@ export default function Layout({ children }) {
         <Divider />
         {role === 'Admin' ?
           <List>
-            {["Quản Lý Đồ án",
+            {["Trang chủ",
               "Đợt đăng kí",
               "Danh sách sinh viên",
-              "Quản lí đề tài theo đợt",
+              "Quản lí đề tài trong đợt",
               "Danh sách tất cả đề tài"].map((text, index) => (
                 <ListItem key={text} disablePadding sx={{ display: "block" }}
                   onClick={() => {
@@ -245,7 +309,10 @@ export default function Layout({ children }) {
                         justifyContent: "center",
                       }}
                     >
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                      {/* {index === 0 ? <AnalyticsIcon /> :
+                      (index === 1 ? <AppRegistrationIcon /> :<MailIcon />) } */}
+                      {handleSetIconAdmin(index)}
+
                     </ListItemIcon>
                     <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                   </ListItemButton>
@@ -254,23 +321,26 @@ export default function Layout({ children }) {
           </List> :
           (role === 'Teacher' ?
             <List>
-              {["Danh sách tất cả đề tài",
-                "Duyệt danh sách đăng kí",
+              {["Trang chủ",
+                "Danh sách tất cả đề tài",
+                "Duyệt đăng kí",
                 "Danh sách sinh viên",
                 "Danh sách đề tài mở"].map((text, index) => (
                   <ListItem key={text} disablePadding sx={{ display: "block" }}
                     onClick={() => {
                       switch (index) {
                         case 0:
-                          navigate("/Topic", { replace: true });
                           break;
                         case 1:
-                          navigate("/ApprovalPTS", { replace: true });
+                          navigate("/Topic", { replace: true });
                           break;
                         case 2:
-                          navigate("/PeriodStudent", { replace: true });
+                          navigate("/ApprovalPTS", { replace: true });
                           break;
                         case 3:
+                          navigate("/PeriodStudent", { replace: true });
+                          break;
+                        case 4:
                           navigate("/PeriodTopic", { replace: true });
                           break;
                       }
@@ -290,7 +360,8 @@ export default function Layout({ children }) {
                           justifyContent: "center",
                         }}
                       >
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+                        {handleSetIconTeacher(index)}
                       </ListItemIcon>
                       <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                     </ListItemButton>
@@ -298,7 +369,8 @@ export default function Layout({ children }) {
                 ))}
             </List> :
             <List>
-              {["Nhóm",
+              {["Trang chủ",
+                "Nhóm",
                 "Danh sách đề tài",
                 "Đăng kí",
                 "Danh sách đã đăng kí",
@@ -308,21 +380,23 @@ export default function Layout({ children }) {
                     onClick={() => {
                       switch (index) {
                         case 0:
-                          navigate("/GroupStudent", { replace: true });
                           break;
                         case 1:
-                          navigate("/Topic", { replace: true });
+                          navigate("/GroupStudent", { replace: true });
                           break;
                         case 2:
-                          navigate("/PeriodTopicStudent", { replace: true });
+                          navigate("/Topic", { replace: true });
                           break;
                         case 3:
-                          navigate("/MyPeriodTopicStudent", { replace: true });
+                          navigate("/PeriodTopicStudent", { replace: true });
                           break;
                         case 4:
-                          navigate("/PeriodStudent", { replace: true });
+                          navigate("/MyPeriodTopicStudent", { replace: true });
                           break;
                         case 5:
+                          navigate("/PeriodStudent", { replace: true });
+                          break;
+                        case 6:
                           navigate("/PeriodTopic", { replace: true });
                           break;
                       }
@@ -342,7 +416,8 @@ export default function Layout({ children }) {
                           justifyContent: "center",
                         }}
                       >
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+                        {handleSetIconStudent(index)}
                       </ListItemIcon>
                       <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                     </ListItemButton>

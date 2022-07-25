@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
-    Box,
-    Button,
-    TextField,
-    Dialog,
     DialogContent,
-    DialogActions,
     DialogTitle,
-    Grid,
     Typography,
-    Input,
-    Snackbar
 } from "@mui/material";
-import Parser from 'html-react-parser';
 import PeriodTopicStudentApi from "../../../api/PeriodTopicStudentApi";
 
 export default function MyPTSDetail({ id }) {
@@ -27,7 +18,6 @@ export default function MyPTSDetail({ id }) {
         let res = await PeriodTopicStudentApi.GetPTSById({ id: id });
         if (res.status === 200) {
             setPTSDetail(res.data);
-            console.log(res.data);
         }
     }
 

@@ -11,7 +11,6 @@ import {
     Typography,
     Input
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import PeriodApi from "../../../api/PeriodApi";
 import "./Period.css"
 import PeriodList from "./PeriodList";

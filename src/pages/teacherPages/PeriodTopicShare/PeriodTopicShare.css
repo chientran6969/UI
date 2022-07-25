@@ -1,0 +1,49 @@
+.select_teacher select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0!important;
+    background: #b3bbb5;
+    background-image: none;
+    flex: 1;
+    padding: 0 .5em;
+    color: rgb(34, 31, 31);
+    cursor: pointer;
+    font-size: 1em;
+    font-family: 'Open Sans', sans-serif;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.select_teacher {
+    position: relative;
+    display: flex;
+    width: 20em;
+    height: 3em;
+    line-height: 3;
+    background: #a5c4b3;
+    overflow: hidden;
+    border-radius: .25em;
+    margin-bottom: 1rem;
+}
+
+.select_teacher::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #8a8d8d;
+    cursor: pointer;
+    pointer-events: none;
+    transition: .25s all ease;
+}
+
+.select_teacher:hover::after {
+    color: #c1d4d1;
+}

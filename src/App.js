@@ -13,6 +13,9 @@ import Topic from "./pages/adminPages/Topic/Topic";
 import TopicForStudent from "./pages/studentPages/TopicForStudent/TopicForStudent.js";
 import PeriodTopicStudent from "./pages/studentPages/PeriodTopicStudent/PeriodTopicStudent.js";
 import MyPeriodTopicStudent from "./pages/studentPages/MyPeriodTopicStudent/MyPeriodTopicStudent";
+import PTSForTeacher from "./pages/teacherPages/PTSForTeacher/PTSForTeacher";
+import PeriodStudentShare from "./pages/teacherPages/PeriodStudentShare/PeriodStudentShare";
+import PeriodTopicShare from "./pages/teacherPages/PeriodTopicShare/PeriodTopicShare";
 
 export default function App() {
   return (
@@ -75,6 +78,21 @@ export default function App() {
           <Route exact path="/MyPeriodTopicStudent" element={
             <Layout>
               <MyPeriodTopicStudent></MyPeriodTopicStudent>
+            </Layout>}>
+          </Route>
+          <Route exact path="/ApprovalPTS" element={
+            <Layout>
+              <PTSForTeacher></PTSForTeacher>
+            </Layout>}>
+          </Route>
+          <Route exact path="/PeriodStudent" element={
+            <Layout>
+              <PeriodStudentShare></PeriodStudentShare>
+            </Layout>}>
+          </Route>
+          <Route exact path="/PeriodTopic" element={
+            <Layout>
+              <PeriodTopicShare></PeriodTopicShare>
             </Layout>}>
           </Route>
         </Routes>

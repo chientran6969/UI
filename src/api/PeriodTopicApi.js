@@ -20,6 +20,25 @@ const PeriodTopicApi = {
                 }
             });
     },
+    GetTopicInPeriodByTeacher: (params) => {
+        const url = "/PeriodTopics/teachers";
+        return axiosClient.get(url, {
+            params
+        })
+            .then((res) => {
+                if (res?.length >= 0) {
+                    return {
+                        status: 200,
+                        data: res
+                    }
+                } else {
+                    return {
+                        status: 404,
+                        error: "Không tìm thấy đề tài nào"
+                    }
+                }
+            });
+    },
 
     ResponsePeriodTopic: (params) => {
         const url = "/PeriodTopics/Response";

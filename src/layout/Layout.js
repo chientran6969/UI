@@ -138,11 +138,23 @@ export default function Layout({ children }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={logout}>Log out</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Cá nhân</MenuItem>
+      <MenuItem onClick={logout}>Đăng xuất</MenuItem>
     </Menu>
   );
+
+  React.useEffect(() => {
+    InitRole();
+  }, []);
+
+  const [role, setRole] = React.useState("");
+
+  function InitRole() {
+    const item = JSON.parse(localStorage.getItem('user'));
+    if (item) {
+      setRole(item.role);
+    }
+  }
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -162,7 +174,7 @@ export default function Layout({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            App
+            Hệ thống quản lí đăng kí dự án CNTT
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -192,69 +204,151 @@ export default function Layout({ children }) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
-          {["Quản Lý Đồ án",
-            "Đợt đăng kí",
-            "Danh sách sinh viên",
-            "Nhóm",
-            "Đề tài",
-            "Danh sách Topic for Admin",
-            "Danh sách Topic for student",
-            "Đăng kí",
-            "Danh sách đã đăng kí"].map((text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: "block" }}
-                onClick={() => {
-                  switch (index) {
-                    case 0:
-                      break;
-                    case 1:
-                      navigate("/admin/Period", { replace: true });
-                      break;
-                    case 2:
-                      navigate("/admin/PeriodStudent", { replace: true });
-                      break;
-                    case 3:
-                      navigate("/GroupStudent", { replace: true });
-                      break;
-                    case 4:
-                      navigate("/admin/PeriodTopic", { replace: true });
-                      break;
-                    case 5:
-                      navigate("/admin/Topic", { replace: true });
-                      break;
-                    case 6:
-                      navigate("/Topic", { replace: true });
-                      break;
-                    case 7:
-                      navigate("/PeriodTopicStudent", { replace: true });
-                      break;
-                    case 8:
-                      navigate("/MyPeriodTopicStudent", { replace: true });
-                      break;
-                  }
-                }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
+        {role === 'Admin' ?
+          <List>
+            {["Quản Lý Đồ án",
+              "Đợt đăng kí",
+              "Danh sách sinh viên",
+              "Quản lí đề tài theo đợt",
+              "Danh sách tất cả đề tài"].map((text, index) => (
+                <ListItem key={text} disablePadding sx={{ display: "block" }}
+                  onClick={() => {
+                    switch (index) {
+                      case 0:
+                        break;
+                      case 1:
+                        navigate("/admin/Period", { replace: true });
+                        break;
+                      case 2:
+                        navigate("/admin/PeriodStudent", { replace: true });
+                        break;
+                      case 3:
+                        navigate("/admin/PeriodTopic", { replace: true });
+                        break;
+                      case 4:
+                        navigate("/admin/Topic", { replace: true });
+                        break;
+                    }
                   }}
                 >
-                  <ListItemIcon
+                  <ListItemButton
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
                     }}
                   >
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-        </List>
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    </ListItemIcon>
+                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+          </List> :
+          (role === 'Teacher' ?
+            <List>
+              {["Danh sách tất cả đề tài",
+                "Duyệt danh sách đăng kí",
+                "Danh sách sinh viên",
+                "Danh sách đề tài mở"].map((text, index) => (
+                  <ListItem key={text} disablePadding sx={{ display: "block" }}
+                    onClick={() => {
+                      switch (index) {
+                        case 0:
+                          navigate("/Topic", { replace: true });
+                          break;
+                        case 1:
+                          navigate("/ApprovalPTS", { replace: true });
+                          break;
+                        case 2:
+                          navigate("/PeriodStudent", { replace: true });
+                          break;
+                        case 3:
+                          navigate("/PeriodTopic", { replace: true });
+                          break;
+                      }
+                    }}
+                  >
+                    <ListItemButton
+                      sx={{
+                        minHeight: 48,
+                        justifyContent: open ? "initial" : "center",
+                        px: 2.5,
+                      }}
+                    >
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 0,
+                          mr: open ? 3 : "auto",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                      </ListItemIcon>
+                      <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+            </List> :
+            <List>
+              {["Nhóm",
+                "Danh sách đề tài",
+                "Đăng kí",
+                "Danh sách đã đăng kí",
+                "Danh sách sinh viên",
+                "Danh sách đề tài mở"].map((text, index) => (
+                  <ListItem key={text} disablePadding sx={{ display: "block" }}
+                    onClick={() => {
+                      switch (index) {
+                        case 0:
+                          navigate("/GroupStudent", { replace: true });
+                          break;
+                        case 1:
+                          navigate("/Topic", { replace: true });
+                          break;
+                        case 2:
+                          navigate("/PeriodTopicStudent", { replace: true });
+                          break;
+                        case 3:
+                          navigate("/MyPeriodTopicStudent", { replace: true });
+                          break;
+                        case 4:
+                          navigate("/PeriodStudent", { replace: true });
+                          break;
+                        case 5:
+                          navigate("/PeriodTopic", { replace: true });
+                          break;
+                      }
+                    }}
+                  >
+                    <ListItemButton
+                      sx={{
+                        minHeight: 48,
+                        justifyContent: open ? "initial" : "center",
+                        px: 2.5,
+                      }}
+                    >
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 0,
+                          mr: open ? 3 : "auto",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                      </ListItemIcon>
+                      <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+            </List>)}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />

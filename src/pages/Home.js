@@ -1,10 +1,10 @@
-import Period from "./Period";
+import Report from "./Report/Report";
+
 
 export default function Home() {
   return (
-    <div className="text-center">
-      <h1>Danh sách đợi đăng kí đang mở</h1>
-      <Period />
-    </div>
+    <>
+    <Report></Report>
+    </>
   );
 }

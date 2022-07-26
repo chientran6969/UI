@@ -16,6 +16,7 @@ import MyPeriodTopicStudent from "./pages/studentPages/MyPeriodTopicStudent/MyPe
 import PTSForTeacher from "./pages/teacherPages/PTSForTeacher/PTSForTeacher";
 import PeriodStudentShare from "./pages/teacherPages/PeriodStudentShare/PeriodStudentShare";
 import PeriodTopicShare from "./pages/teacherPages/PeriodTopicShare/PeriodTopicShare";
+import Report from "./pages/Report/Report";
 
 export default function App() {
   return (
@@ -49,7 +50,11 @@ export default function App() {
               <Period></Period>
             </Layout>
           } />
-
+          <Route exact path="/" element={
+            <Layout>
+              <Report></Report>
+            </Layout>}>
+          </Route>
           <Route exact path="/GroupStudent" element={
             <Layout>
               <GroupStudent></GroupStudent>

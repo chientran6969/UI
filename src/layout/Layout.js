@@ -279,6 +279,7 @@ export default function Layout({ children }) {
                   onClick={() => {
                     switch (index) {
                       case 0:
+                        navigate("/", { replace: true });
                         break;
                       case 1:
                         navigate("/admin/Period", { replace: true });

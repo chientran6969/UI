@@ -31,6 +31,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 const drawerWidth = 240;
 
@@ -105,6 +106,9 @@ export default function Layout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const [role, setRole] = React.useState("Student");
+
+
   const isMenuOpen = Boolean(anchorEl);
 
   const handleDrawerOpen = () => {
@@ -130,6 +134,11 @@ export default function Layout({ children }) {
     navigate("/login", { replace: true });
   };
 
+  const myInfo = async () => {
+    handleMenuClose();
+    navigate("/MyInfo", { replace: true });
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -147,7 +156,7 @@ export default function Layout({ children }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Cá nhân</MenuItem>
+      {role!=="Student"?<MenuItem onClick={myInfo}>Cá nhân</MenuItem>:''}
       <MenuItem onClick={logout}>Đăng xuất</MenuItem>
     </Menu>
   );
@@ -156,7 +165,6 @@ export default function Layout({ children }) {
     InitRole();
   }, []);
 
-  const [role, setRole] = React.useState("");
 
   function InitRole() {
     const item = JSON.parse(localStorage.getItem('user'));
@@ -177,6 +185,8 @@ export default function Layout({ children }) {
         return (<FilterListIcon />);
       case 4:
         return (<ClearAllIcon />);
+      case 5:
+        return (<PeopleOutlineIcon />);
       default:
         return (<MailIcon />);
     }
@@ -274,7 +284,8 @@ export default function Layout({ children }) {
               "Đợt đăng kí",
               "Danh sách sinh viên",
               "Quản lí đề tài trong đợt",
-              "Danh sách tất cả đề tài"].map((text, index) => (
+              "Danh sách tất cả đề tài",
+              "Quản lí tài khoản"].map((text, index) => (
                 <ListItem key={text} disablePadding sx={{ display: "block" }}
                   onClick={() => {
                     switch (index) {
@@ -292,6 +303,9 @@ export default function Layout({ children }) {
                         break;
                       case 4:
                         navigate("/admin/Topic", { replace: true });
+                        break;
+                      case 5:
+                        navigate("/admin/AccountManager", { replace: true });
                         break;
                     }
                   }}

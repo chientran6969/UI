@@ -17,6 +17,8 @@ import PTSForTeacher from "./pages/teacherPages/PTSForTeacher/PTSForTeacher";
 import PeriodStudentShare from "./pages/teacherPages/PeriodStudentShare/PeriodStudentShare";
 import PeriodTopicShare from "./pages/teacherPages/PeriodTopicShare/PeriodTopicShare";
 import Report from "./pages/Report/Report";
+import AccountManager from "./pages/adminPages/User/AccountManager";
+import MyInfo from "./pages/InfoPages/MyInfo";
 
 export default function App() {
   return (
@@ -65,9 +67,19 @@ export default function App() {
               <PeriodTopic></PeriodTopic>
             </Layout>}>
           </Route>
+          <Route exact path="/admin/AccountManager" element={
+            <Layout>
+              <AccountManager></AccountManager>
+            </Layout>}>
+          </Route>
           <Route exact path="/admin/Topic" element={
             <Layout>
               <Topic></Topic>
+            </Layout>}>
+          </Route>
+          <Route exact path="/MyInfo" element={
+            <Layout>
+              <MyInfo></MyInfo>
             </Layout>}>
           </Route>
           <Route exact path="/Topic" element={
